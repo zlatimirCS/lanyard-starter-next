@@ -1,7 +1,16 @@
+"use client";
+
 import { products } from "@/utils/data/products";
 import Image from "next/image";
+import { useState } from "react";
+import CustomSelect from "../customSelect";
 
 function ChooseProduct() {
+  const [selectedSizes, setSelectedSizes] = useState<{
+    [key: string]: string | null;
+  }>({});
+  console.log("selectedSizes", selectedSizes);
+
   return (
     <div className="max-w-[954px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[27px]">
       {products.map((product, index) => (
@@ -10,7 +19,7 @@ function ChooseProduct() {
             index === 2
               ? "md:col-span-2 md:justify-self-center md:w-1/2 lg:col-span-1 lg:w-full"
               : ""
-          } p-4 bg-white border border-[1px] border-gray-300 rounded-[8px] flex flex-col gap-4 min-w-[240px]`}
+          } p-4 bg-white border border-gray-300 rounded-[8px] flex flex-col gap-4 min-w-[240px]`}
           key={product.id}
         >
           <div className="w-full h-[300px] relative">
@@ -28,7 +37,19 @@ function ChooseProduct() {
             <p className="text-gray-900 text-[16px] font-semibold leading-[140%] tracking-[-0.32px]">
               {product.description}
             </p>
-            <p>Choose ribbon size:</p>
+            <div className="flex flex-col gap-2">
+              <p className="text-gray-900 text-[16px]">Choose ribbon size:</p>
+              <CustomSelect
+                options={product.sizes || []}
+                value={selectedSizes[product.id] || null}
+                onChange={(value) =>
+                  setSelectedSizes((prev) => ({
+                    ...prev,
+                    [product.id]: value,
+                  }))
+                }
+              />
+            </div>
           </div>
           <div>button</div>
         </div>
