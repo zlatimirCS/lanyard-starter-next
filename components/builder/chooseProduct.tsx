@@ -56,7 +56,12 @@ function ChooseProduct() {
               />
             </div>
           </div>
-          <Button variant="primary" size="full" className="" onClick={() => {}}>
+          <Button
+            variant="primary"
+            size="full"
+            className="p-[12px]"
+            onClick={() => {}}
+          >
             <span>Create</span>
           </Button>
         </div>

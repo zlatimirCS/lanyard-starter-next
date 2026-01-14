@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useUIStore } from "@/store/uiStore";
+import Button from "./Button";
+import Image from "next/image";
 
 const steps = ["Product", "Fittings", "Colour", "Logo", "Proof"];
 
@@ -20,8 +22,21 @@ function Stepper() {
   return (
     <div className="bg-background-secondary">
       <div className="max-w-[1440px] mx-auto px-4 flex items-center justify-between gap-[20px] py-[24px]">
-        <div onClick={() => setCurrentStep(Math.max(0, currentStep - 1))}>
-          left
+        <div>
+          <Button
+            variant="transparent"
+            onClick={() => setCurrentStep(Math.max(0, currentStep - 1))}
+            size="fit"
+            className="py-[8px] px-[12px] flex items-center gap-2"
+          >
+            <Image
+              src="/assets/icons/arrow-left-dark.svg"
+              alt="Prev"
+              width={16}
+              height={16}
+            />
+            Previous
+          </Button>
         </div>
         {/* Circles and Lines Row */}
         <div className="flex-1 min-h-[40px] max-w-[400px]">
@@ -103,8 +118,21 @@ function Stepper() {
           </div>
         </div>
         {/* Circles and Lines Row */}
-        <div onClick={() => setCurrentStep(Math.min(6, currentStep + 1))}>
-          right
+        <div>
+          <Button
+            variant="primary"
+            onClick={() => setCurrentStep(Math.min(6, currentStep + 1))}
+            size="fit"
+            className="py-[8px] px-[12px] flex items-center gap-2"
+          >
+            Next
+            <Image
+              src="/assets/icons/arrow-right-light.svg"
+              alt="Next"
+              width={16}
+              height={16}
+            />
+          </Button>
         </div>
       </div>
     </div>
