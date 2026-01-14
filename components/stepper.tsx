@@ -1,11 +1,13 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useUIStore } from "@/store/uiStore";
 
 const steps = ["Product", "Fittings", "Colour", "Logo", "Proof"];
 
 function Stepper() {
-  const [currentStep, setCurrentStep] = useState<number>(0);
-  const [animatedSteps, setAnimatedSteps] = useState<number[]>([]);
+  const currentStep = useUIStore((state) => state.currentStep);
+  const animatedSteps = useUIStore((state) => state.animatedSteps);
+  const setAnimatedSteps = useUIStore((state) => state.setAnimatedSteps);
 
   useEffect(() => {
     // Animate steps as they become completed
@@ -13,7 +15,7 @@ function Stepper() {
       setAnimatedSteps(Array.from({ length: currentStep + 1 }, (_, i) => i));
     }, 100);
     return () => clearTimeout(timer);
-  }, [currentStep]);
+  }, [currentStep, setAnimatedSteps]);
 
   return (
     <div className="bg-white border-b border-gray-200 py-6">
