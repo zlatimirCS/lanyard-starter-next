@@ -9,7 +9,7 @@ interface UIStore {
 
 export const useUIStore = create<UIStore>((set) => ({
   // state
-  currentStep: 3,
+  currentStep: 1,
   animatedSteps: [],
 
   // actions

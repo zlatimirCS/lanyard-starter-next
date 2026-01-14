@@ -13,7 +13,7 @@ function Stepper() {
   useEffect(() => {
     // Animate steps as they become completed
     const timer = setTimeout(() => {
-      setAnimatedSteps(Array.from({ length: currentStep }, (_, i) => i));
+      setAnimatedSteps(Array.from({ length: currentStep + 1 }, (_, i) => i));
     }, 100);
     return () => clearTimeout(timer);
   }, [currentStep, setAnimatedSteps]);
@@ -28,10 +28,10 @@ function Stepper() {
         <div className="flex-1 min-h-[40px]">
           <div className="flex items-center px-[24px]">
             {steps.map((step, index) => {
-              const isCompleted = index < currentStep;
-              const isActive = index === currentStep;
-              const isPending = index > currentStep;
-              const isAnimated = animatedSteps.includes(index);
+              const isCompleted = index + 1 < currentStep;
+              const isActive = index + 1 === currentStep;
+              const isPending = index + 1 > currentStep;
+              const isAnimated = animatedSteps.includes(index + 1);
 
               return (
                 <div
@@ -104,7 +104,7 @@ function Stepper() {
           </div>
         </div>
         {/* Circles and Lines Row */}
-        <div onClick={() => setCurrentStep(Math.min(4, currentStep + 1))}>
+        <div onClick={() => setCurrentStep(Math.min(6, currentStep + 1))}>
           right
         </div>
       </div>
