@@ -4,6 +4,7 @@ import { products } from "@/utils/data/products";
 import Image from "next/image";
 import { useState } from "react";
 import CustomSelect from "../customSelect";
+import Button from "../Button";
 
 function ChooseProduct() {
   const [selectedSizes, setSelectedSizes] = useState<{
@@ -22,7 +23,7 @@ function ChooseProduct() {
           } p-4 bg-white border border-gray-300 rounded-[8px] flex flex-col gap-4 min-w-[240px]`}
           key={product.id}
         >
-          <div className="w-full h-[300px] relative">
+          <div className="w-full h-[250px] relative">
             <Image
               src={product.imageUrl}
               alt={product.name}
@@ -30,15 +31,19 @@ function ChooseProduct() {
               className="object-cover"
             />
           </div>
-          <div className="flex flex-col gap-4 flex-1">
-            <h2 className="text-gray-900 text-[24px] font-semibold leading-[120%] tracking-[-0.48px]">
-              {product.name}
-            </h2>
-            <p className="text-gray-900 text-[16px] font-semibold leading-[140%] tracking-[-0.32px]">
-              {product.description}
-            </p>
+          <div className="flex flex-col gap-4 flex-1 justify-between">
             <div className="flex flex-col gap-2">
-              <p className="text-gray-900 text-[16px]">Choose ribbon size:</p>
+              <h2 className="text-gray-900 text-[24px] font-semibold leading-[120%] tracking-[-0.48px]">
+                {product.name}
+              </h2>
+              <p className="text-gray-900 text-[16px] font-semibold leading-[140%] tracking-[-0.32px]">
+                {product.description}
+              </p>
+            </div>
+            <div className="flex flex-col gap-2">
+              <p className="text-gray-500 text-[14px] font-normal leading-[140%]">
+                Choose ribbon size:
+              </p>
               <CustomSelect
                 options={product.sizes || []}
                 value={selectedSizes[product.id] || null}
@@ -51,7 +56,9 @@ function ChooseProduct() {
               />
             </div>
           </div>
-          <div>button</div>
+          <Button variant="primary" size="full" className="" onClick={() => {}}>
+            <span>Create</span>
+          </Button>
         </div>
       ))}
     </div>
