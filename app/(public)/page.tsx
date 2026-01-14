@@ -1,3 +1,9 @@
+import HomePageComponent from "@/components/pages/homePageComponent";
+
 export default function Home() {
-  return <div className="text-red-500">test</div>;
+  return (
+    <main>
+      <HomePageComponent />
+    </main>
+  );
 }

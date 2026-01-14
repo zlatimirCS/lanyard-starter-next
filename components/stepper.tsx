@@ -12,7 +12,7 @@ function Stepper() {
   useEffect(() => {
     // Animate steps as they become completed
     const timer = setTimeout(() => {
-      setAnimatedSteps(Array.from({ length: currentStep + 1 }, (_, i) => i));
+      setAnimatedSteps(Array.from({ length: currentStep }, (_, i) => i));
     }, 100);
     return () => clearTimeout(timer);
   }, [currentStep, setAnimatedSteps]);
