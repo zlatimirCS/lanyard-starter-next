@@ -6,6 +6,7 @@ const steps = ["Product", "Fittings", "Colour", "Logo", "Proof"];
 
 function Stepper() {
   const currentStep = useUIStore((state) => state.currentStep);
+  const setCurrentStep = useUIStore((state) => state.setCurrentStep);
   const animatedSteps = useUIStore((state) => state.animatedSteps);
   const setAnimatedSteps = useUIStore((state) => state.setAnimatedSteps);
 
@@ -19,11 +20,13 @@ function Stepper() {
 
   return (
     <div className="bg-background-secondary">
-      <div className="max-w-[1440px] mx-auto px-4 flex items-center justify-between gap-[20px]">
-        <div>left</div>
+      <div className="max-w-[1440px] mx-auto px-4 flex items-center justify-between gap-[20px] py-[24px]">
+        <div onClick={() => setCurrentStep(Math.max(0, currentStep - 1))}>
+          left
+        </div>
         {/* Circles and Lines Row */}
-        <div className="">
-          <div className="flex items-center">
+        <div className="flex-1 min-h-[40px]">
+          <div className="flex items-center px-[24px]">
             {steps.map((step, index) => {
               const isCompleted = index < currentStep;
               const isActive = index === currentStep;
@@ -38,18 +41,26 @@ function Stepper() {
                   {/* Circle */}
                   <div className="flex flex-col items-center relative z-10">
                     <div
-                      className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 ${
+                      className={`w-5 h-5 rounded-full flex items-center justify-center transition-all duration-500 relative ${
                         isCompleted
-                          ? "bg-blue-600 scale-100"
+                          ? "bg-blue-600 border-2 border-blue-600"
                           : isActive
-                          ? "bg-white border-2 border-blue-600 scale-110"
+                          ? "bg-white border-2 border-blue-600"
                           : "bg-gray-200 border-2 border-gray-300"
                       }`}
                     >
+                      {/*absolute place for text label*/}
+                      <div className="absolute top-4 w-max text-center">
+                        <span
+                          className={`text-[14px] text-neutral-gray-60 font-normal leading-[140%]`}
+                        >
+                          {step}
+                        </span>
+                      </div>
                       {/* Checkmark for completed steps */}
                       {isCompleted && (
                         <svg
-                          className={`w-6 h-6 text-white transition-all duration-300 ${
+                          className={`w-[10px] h-[10px] text-white transition-all duration-300 ${
                             isAnimated
                               ? "scale-100 opacity-100"
                               : "scale-0 opacity-0"
@@ -69,12 +80,12 @@ function Stepper() {
 
                       {/* Dot for active step */}
                       {isActive && (
-                        <div className="w-3 h-3 bg-blue-600 rounded-full animate-pulse" />
+                        <div className="w-[4px] h-[4px] bg-blue-600 rounded-full" />
                       )}
 
                       {/* Empty for pending steps */}
                       {isPending && (
-                        <div className="w-3 h-3 bg-gray-400 rounded-full" />
+                        <div className="w-[4px] h-[4px] bg-gray-400 rounded-full" />
                       )}
                     </div>
                   </div>
@@ -91,42 +102,11 @@ function Stepper() {
               );
             })}
           </div>
-
-          {/* Text Labels Row - matching the circle positions */}
-          <div className="flex mt-3">
-            {steps.map((step, index) => {
-              const isActive = index === currentStep;
-              const isCompleted = index < currentStep;
-
-              return (
-                <div
-                  key={step}
-                  className="flex items-center flex-1 last:flex-none"
-                >
-                  {/* Text Label - centered in same width as circle */}
-                  <div className="w-10 text-center">
-                    <span
-                      className={`text-sm font-medium transition-colors duration-300 ${
-                        isActive
-                          ? "text-blue-600"
-                          : isCompleted
-                          ? "text-gray-700"
-                          : "text-gray-400"
-                      }`}
-                    >
-                      {step}
-                    </span>
-                  </div>
-
-                  {/* Spacer matching the line width */}
-                  {index < steps.length - 1 && <div className="flex-1 mx-2" />}
-                </div>
-              );
-            })}
-          </div>
         </div>
         {/* Circles and Lines Row */}
-        <div>right</div>
+        <div onClick={() => setCurrentStep(Math.min(4, currentStep + 1))}>
+          right
+        </div>
       </div>
     </div>
   );
