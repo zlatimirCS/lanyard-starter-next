@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useUIStore } from "@/store/uiStore";
 
 const steps = ["Product", "Fittings", "Colour", "Logo", "Proof"];
@@ -7,14 +7,13 @@ const steps = ["Product", "Fittings", "Colour", "Logo", "Proof"];
 function Stepper() {
   const currentStep = useUIStore((state) => state.currentStep);
   const setCurrentStep = useUIStore((state) => state.setCurrentStep);
-  const animatedSteps = useUIStore((state) => state.animatedSteps);
-  const setAnimatedSteps = useUIStore((state) => state.setAnimatedSteps);
+  const [animatedSteps, setAnimatedSteps] = useState<number[]>([]);
 
   useEffect(() => {
     // Animate steps as they become completed
     const timer = setTimeout(() => {
       setAnimatedSteps(Array.from({ length: currentStep + 1 }, (_, i) => i));
-    }, 100);
+    }, 1000);
     return () => clearTimeout(timer);
   }, [currentStep, setAnimatedSteps]);
 
@@ -25,12 +24,12 @@ function Stepper() {
           left
         </div>
         {/* Circles and Lines Row */}
-        <div className="flex-1 min-h-[40px]">
+        <div className="flex-1 min-h-[40px] max-w-[400px]">
           <div className="flex items-center px-[24px]">
             {steps.map((step, index) => {
               const isCompleted = index + 1 < currentStep;
               const isActive = index + 1 === currentStep;
-              const isPending = index + 1 > currentStep;
+              // const isPending = index + 1 > currentStep;
               const isAnimated = animatedSteps.includes(index + 1);
 
               return (
@@ -43,10 +42,10 @@ function Stepper() {
                     <div
                       className={`w-5 h-5 rounded-full flex items-center justify-center transition-all duration-500 relative ${
                         isCompleted
-                          ? "bg-blue-600 border-2 border-blue-600"
+                          ? "bg-blue-70 border border-blue-70"
                           : isActive
-                          ? "bg-white border-2 border-blue-600"
-                          : "bg-gray-200 border-2 border-gray-300"
+                          ? "bg-white border border-blue-70"
+                          : "bg-white border border-neutral-gray-30"
                       }`}
                     >
                       {/*absolute place for text label*/}
@@ -80,13 +79,13 @@ function Stepper() {
 
                       {/* Dot for active step */}
                       {isActive && (
-                        <div className="w-[4px] h-[4px] bg-blue-600 rounded-full" />
+                        <div className="w-[4px] h-[4px] bg-blue-70 rounded-full" />
                       )}
 
                       {/* Empty for pending steps */}
-                      {isPending && (
+                      {/* {isPending && (
                         <div className="w-[4px] h-[4px] bg-gray-400 rounded-full" />
-                      )}
+                      )} */}
                     </div>
                   </div>
 
