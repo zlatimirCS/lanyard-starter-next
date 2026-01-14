@@ -1,7 +1,11 @@
 "use client";
-import ChooseFittings from "../builder/chooseFittings";
 import ChooseProduct from "../builder/chooseProduct";
+import dynamic from "next/dynamic";
 import { useUIStore } from "@/store/uiStore";
+
+const ChooseFittings = dynamic(() => import("../builder/chooseFittings"), {
+  ssr: false,
+});
 
 function HomePageComponent() {
   const currentStep = useUIStore((state) => state.currentStep);
