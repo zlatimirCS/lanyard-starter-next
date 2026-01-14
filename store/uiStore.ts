@@ -7,7 +7,7 @@ interface UIStore {
 
 export const useUIStore = create<UIStore>((set) => ({
   // state
-  currentStep: 1,
+  currentStep: 0,
 
   // actions
   setCurrentStep: (step: number) => set({ currentStep: step }),
