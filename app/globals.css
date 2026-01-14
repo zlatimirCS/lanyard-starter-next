@@ -6,6 +6,7 @@
   --gray-900: #1e1e1e;
   --background-secondary: #f2f2f7;
   --neutral-gray-60: #6f6f6f;
+  --color-gray-300: #d9d9d9;
 }
 
 @theme inline {
@@ -15,6 +16,7 @@
   --color-gray-900: var(--gray-900);
   --color-background-secondary: var(--background-secondary);
   --color-neutral-gray-60: var(--neutral-gray-60);
+  --color-gray-300: var(--color-gray-300);
 }
 
 @media (prefers-color-scheme: dark) {

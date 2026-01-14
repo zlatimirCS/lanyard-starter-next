@@ -11,9 +11,9 @@ function HomePageComponent() {
   const currentStep = useUIStore((state) => state.currentStep);
   const routeSteps = () => {
     switch (currentStep) {
-      case 0:
-        return <ChooseProduct />;
       case 1:
+        return <ChooseProduct />;
+      case 2:
         return <ChooseFittings />;
       default:
         return <></>;

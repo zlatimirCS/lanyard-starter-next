@@ -10,9 +10,7 @@ export default function PublicLayout({
     <div className="min-h-screen bg-background">
       <Header />
       <Stepper />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {children}
-      </main>
+      <main className="max-w-[1440px] mx-auto py-[120px] px-4">{children}</main>
     </div>
   );
 }
