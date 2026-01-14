@@ -4,7 +4,7 @@ import type { NextRequest } from "next/server";
 export function middleware(req: NextRequest) {
   // 🔐 Read token (real usage)
   // const token = req.cookies.get("token")?.value;
-  const token = false; // ✅ test logged-in
+  const token = true; // ✅ test logged-in
 
   const { pathname } = req.nextUrl;
 
