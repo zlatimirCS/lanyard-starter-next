@@ -7,15 +7,17 @@ import Button from "../Button";
 import Select from "react-select";
 
 function ChooseProduct() {
-  const [selectedSizes, setSelectedSizes] = useState<{
-    [key: string]: string | null;
-  }>({});
-  console.log("selectedSizes", selectedSizes);
+  // const [selectedSizes, setSelectedSizes] = useState<{
+  //   [key: string]: string | null;
+  // }>({});
+  // console.log("selectedSizes", selectedSizes);
 
   const handleChange = (
-    selectedOption: { value: string; label: string } | null
+    selectedOption: { value: string; label: string } | null,
+    productId: string
   ) => {
     console.log("Selected option:", selectedOption);
+    console.log("Product ID:", productId);
   };
 
   return (
@@ -54,7 +56,7 @@ function ChooseProduct() {
                 <Select
                   options={product?.sizes || []}
                   instanceId="choose-product-select"
-                  onChange={handleChange}
+                  onChange={(option) => handleChange(option, product.id)}
                 />
               </div>
             )}
