@@ -35,11 +35,7 @@ function HomePageComponent() {
         return <></>;
     }
   };
-  return (
-    <>
-      <div>{routeSteps()}</div>
-    </>
-  );
+  return routeSteps();
 }
 
 export default HomePageComponent;

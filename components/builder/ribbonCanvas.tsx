@@ -6,7 +6,7 @@ function RibbonCanvas() {
       <p className="text-gray-900 text-[14px] font-normal leading-[140%] mb-[5px]">
         20mm Ribbon
       </p>
-      <div className="bg-red-100 w-fit flex gap-5 justify-between">
+      <div className="w-fit flex gap-5 justify-between">
         <div className="h-[500px] w-[90px] relative">
           <Image
             src="/assets/icons/ribbon-placeholder.svg"

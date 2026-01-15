@@ -7,7 +7,7 @@ function Fittings() {
     console.log(`Checkbox is now: ${event.target.value}`);
   };
   return (
-    <div className="bg-yellow-300 w-[270px] p-[16px] rounded-[8px] border border-gray-300 flex flex-col gap-4">
+    <div className="w-[302px] p-[16px] rounded-[8px] border border-gray-300 flex flex-col gap-4">
       <p className="text-gray-900 text-[16px] font-normal leading-[140%]">
         Lanyard fittings
       </p>
@@ -31,12 +31,14 @@ function Fittings() {
               </p>
             </div>
             <div className="relative w-[50px] h-[50px] bg-gray-300">
-              <Image
-                src={fitting.imageUrl}
-                alt={fitting.name}
-                fill
-                className="object-cover"
-              />
+              {fitting.imageUrl && (
+                <Image
+                  src={fitting.imageUrl}
+                  alt={fitting.name}
+                  fill
+                  className="object-cover"
+                />
+              )}
             </div>
           </div>
         ))}

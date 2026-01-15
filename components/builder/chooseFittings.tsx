@@ -3,7 +3,7 @@ import Fittings from "./fittings";
 
 function ChooseFittings() {
   return (
-    <div className="max-w-[954px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-[27px]">
+    <div className="max-w-[954px] mx-auto flex justify-center gap-[27px] xl:gap-[250px]">
       <RibbonCanvas />
       <Fittings />
     </div>
