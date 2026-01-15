@@ -19,8 +19,9 @@ const ChooseLogo = dynamic(() => import("../builder/chooseLogo"), {
 const Proof = dynamic(() => import("../builder/proof"), { ssr: false });
 
 function HomePageComponent() {
-  const currentStep = useUIStore((state) => state.currentStep);
+  // const currentStep = useUIStore((state) => state.currentStep);
   const settings = useUIStore((state) => state.settings);
+  const activeStep = settings.activeStep;
   const loadSettingsFromCookies = useUIStore((s) => s.loadSettingsFromCookies);
 
   // Load settings from cookies on mount
@@ -40,7 +41,7 @@ function HomePageComponent() {
     saveSettingsToCookies(settings);
   }, [settings]);
   const routeSteps = () => {
-    switch (currentStep) {
+    switch (activeStep) {
       case 0:
         return <ChooseProduct />;
       case 1:

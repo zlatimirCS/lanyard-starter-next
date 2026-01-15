@@ -11,8 +11,9 @@ const Stepper = () => {
     []
   );
 
-  const currentStep = useUIStore((state) => state.currentStep);
-  const setCurrentStep = useUIStore((state) => state.setCurrentStep);
+  const settings = useUIStore((state) => state.settings);
+  const activeStep = settings.activeStep;
+  const setActiveStep = useUIStore((state) => state.setActiveStep);
 
   // const isFirstStep = currentStep === 0;
   // const isLastStep = currentStep === steps.length - 1;
@@ -25,7 +26,7 @@ const Stepper = () => {
           variant="transparent"
           size="fit"
           // disabled={isFirstStep}
-          onClick={() => setCurrentStep(Math.max(0, currentStep - 1))}
+          onClick={() => setActiveStep(Math.max(0, activeStep - 1))}
           className="py-2 px-3 flex items-center gap-2"
         >
           <Image
@@ -41,8 +42,8 @@ const Stepper = () => {
         <div className="flex-1 max-w-[420px]">
           <div className="flex items-center px-6">
             {steps.map((step, index) => {
-              const isCompleted = index < currentStep;
-              const isActive = index === currentStep;
+              const isCompleted = index < activeStep;
+              const isActive = index === activeStep;
 
               return (
                 <div
@@ -129,9 +130,7 @@ const Stepper = () => {
           variant="primary"
           size="fit"
           // disabled={isLastStep}
-          onClick={() =>
-            setCurrentStep(Math.min(steps.length, currentStep + 1))
-          }
+          onClick={() => setActiveStep(Math.min(steps.length, activeStep + 1))}
           className="py-2 px-3 flex items-center gap-2"
         >
           Next

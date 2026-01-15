@@ -14,6 +14,7 @@ interface ProductSettings {
 
 interface Settings {
   pickedProduct: string;
+  activeStep: number;
   build: {
     lanyard: ProductSettings;
     dangle: ProductSettings;
@@ -22,9 +23,10 @@ interface Settings {
 }
 
 interface UIStore {
-  currentStep: number;
-  setCurrentStep: (step: number) => void;
+  // currentStep: number;
+  // setCurrentStep: (step: number) => void;
   settings: Settings;
+  setActiveStep: (step: number) => void;
   setRibbonSize: (productId: keyof Settings["build"], size: string) => void;
   setPickActiveProduct: (productId: keyof Settings["build"]) => void;
   setFitting: (productId: keyof Settings["build"], fitting: string) => void;
@@ -50,6 +52,7 @@ function getDefaultSettingsFromCookies(): Settings | null {
 
 const defaultSettings = {
   pickedProduct: "",
+  activeStep: 0,
   build: {
     lanyard: {
       id: "lanyard",
@@ -80,11 +83,15 @@ const defaultSettings = {
 
 export const useUIStore = create<UIStore>((set) => ({
   // state
-  currentStep: 0,
   settings: defaultSettings,
 
   // actions
-  setCurrentStep: (step: number) => set({ currentStep: step }),
+  setActiveStep: (step: number) =>
+    set(
+      produce((state: UIStore) => {
+        state.settings.activeStep = step;
+      })
+    ),
   setRibbonSize: (productId: keyof Settings["build"], size: string) =>
     set(
       produce((state: UIStore) => {

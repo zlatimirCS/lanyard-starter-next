@@ -12,7 +12,8 @@ function ChooseProduct() {
     (state) => state.setPickActiveProduct
   );
   const settings = useUIStore((state) => state.settings);
-  const setCurrentStep = useUIStore((state) => state.setCurrentStep);
+  const activeStep = settings.activeStep;
+  const setActiveStep = useUIStore((state) => state.setActiveStep);
 
   console.log("Current settings:", settings);
 
@@ -33,7 +34,7 @@ function ChooseProduct() {
     // Proceed to the next step
     console.log("Create button clicked for product:", productId);
     setPickActiveProduct(productId as keyof typeof settings.build);
-    setCurrentStep(1);
+    setActiveStep(1);
   };
 
   return (
