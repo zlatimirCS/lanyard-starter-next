@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { produce } from "immer";
 
 interface ProductSettings {
   ribbonSize: string;
@@ -16,6 +17,7 @@ interface UIStore {
   currentStep: number;
   setCurrentStep: (step: number) => void;
   settings: Settings;
+  setRibbonSize: (productId: keyof Settings, size: string) => void;
 }
 
 const defaultSettings = {
@@ -37,4 +39,10 @@ export const useUIStore = create<UIStore>((set) => ({
 
   // actions
   setCurrentStep: (step: number) => set({ currentStep: step }),
+  setRibbonSize: (productId: keyof Settings, size: string) =>
+    set(
+      produce((state: UIStore) => {
+        state.settings[productId].ribbonSize = size;
+      })
+    ),
 }));

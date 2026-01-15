@@ -2,15 +2,15 @@
 
 import { products } from "@/utils/data/products";
 import Image from "next/image";
-import { useState } from "react";
 import Button from "../Button";
 import Select from "react-select";
+import { useUIStore } from "@/store/uiStore";
 
 function ChooseProduct() {
-  // const [selectedSizes, setSelectedSizes] = useState<{
-  //   [key: string]: string | null;
-  // }>({});
-  // console.log("selectedSizes", selectedSizes);
+  const setRibbonSize = useUIStore((state) => state.setRibbonSize);
+  const settings = useUIStore((state) => state.settings);
+
+  console.log("Current settings:", settings);
 
   const handleChange = (
     selectedOption: { value: string; label: string } | null,
@@ -18,6 +18,9 @@ function ChooseProduct() {
   ) => {
     console.log("Selected option:", selectedOption);
     console.log("Product ID:", productId);
+    if (selectedOption && productId) {
+      setRibbonSize(productId as keyof typeof settings, selectedOption.value);
+    }
   };
 
   return (
@@ -57,6 +60,13 @@ function ChooseProduct() {
                   options={product?.sizes || []}
                   instanceId="choose-product-select"
                   onChange={(option) => handleChange(option, product.id)}
+                  value={
+                    product.sizes.find(
+                      (size) =>
+                        size.value ===
+                        settings[product.id as keyof typeof settings].ribbonSize
+                    ) || null
+                  }
                 />
               </div>
             )}
