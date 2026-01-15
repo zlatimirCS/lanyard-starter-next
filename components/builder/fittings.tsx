@@ -1,0 +1,44 @@
+import { fittingsOptions } from "@/utils/data/fittingsOptions";
+import CustomCheckbox from "../customCheckbox";
+import Image from "next/image";
+
+function Fittings() {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(`Checkbox is now: ${event.target.value}`);
+  };
+  return (
+    <div className="bg-yellow-300 w-[270px] p-[16px] rounded-[8px] border border-gray-300 flex flex-col gap-2">
+      <p className="text-gray-900 text-[16px] font-normal leading-[140%]">
+        Lanyard fittings
+      </p>
+      <p className="text-gray-500 text-[14px] font-normal leading-[140%]">
+        Choose clip:
+      </p>
+      <div className="flex flex-col gap-4">
+        {fittingsOptions.lanyard.map((fitting) => (
+          <div key={fitting.id} className="flex items-start gap-2">
+            <CustomCheckbox onChange={handleChange} value={fitting.id} />
+            <div className="flex-1 flex flex-col gap-[2px] mt-[-3px]">
+              <p className="text-gray-900 text-[16px] font-normal leading-[140%]">
+                {fitting.name}
+              </p>
+              <p className="text-gray-500 text-[16px] font-normal leading-[140%]">
+                {fitting.description}
+              </p>
+            </div>
+            <div className="relative w-[50px] h-[50px] bg-gray-300">
+              <Image
+                src={fitting.imageUrl}
+                alt={fitting.name}
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default Fittings;
