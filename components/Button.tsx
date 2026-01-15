@@ -4,12 +4,14 @@ function Button({
   children,
   className,
   onClick,
+  disabled,
 }: {
   variant: "primary" | "secondary" | "transparent";
   size: "full" | "fit";
   children: React.ReactNode;
   className?: string;
   onClick?: () => void;
+  disabled?: boolean;
 }) {
   const buttonClasses = {
     primary: "bg-brand-800 rounded-[8px] text-[16px] text-brand-100",
@@ -20,8 +22,13 @@ function Button({
   };
   return (
     <button
-      className={`cursor-pointer ${buttonClasses[variant]} ${buttonClasses[size]} ${className}`}
+      className={`${
+        disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
+      } ${buttonClasses[variant]} ${
+        buttonClasses[size]
+      } ${className} transition-all duration-200 ease-in-out hover:scale-[1.02] active:scale-[0.98]`}
       onClick={onClick}
+      disabled={disabled}
     >
       {children}
     </button>

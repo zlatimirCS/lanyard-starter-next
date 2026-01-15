@@ -12,6 +12,7 @@ function ChooseProduct() {
     (state) => state.setPickActiveProduct
   );
   const settings = useUIStore((state) => state.settings);
+  const setCurrentStep = useUIStore((state) => state.setCurrentStep);
 
   console.log("Current settings:", settings);
 
@@ -23,7 +24,7 @@ function ChooseProduct() {
     console.log("Product ID:", productId);
     if (selectedOption && productId) {
       setRibbonSize(
-        productId as keyof typeof settings.settings,
+        productId as keyof typeof settings.build,
         selectedOption.value
       );
     }
@@ -31,7 +32,8 @@ function ChooseProduct() {
   const handleCreate = (productId: string) => {
     // Proceed to the next step
     console.log("Create button clicked for product:", productId);
-    setPickActiveProduct(productId as keyof typeof settings.settings);
+    setPickActiveProduct(productId as keyof typeof settings.build);
+    setCurrentStep(1);
   };
 
   return (
@@ -42,7 +44,11 @@ function ChooseProduct() {
             index === 2
               ? "md:col-span-2 md:justify-self-center md:w-1/2 lg:col-span-1 lg:w-full"
               : ""
-          } p-4 bg-white border border-gray-300 rounded-[8px] flex flex-col gap-4 min-w-[240px]`}
+          } p-4 bg-white border ${`${
+            settings?.pickedProduct === product?.id
+              ? "border-brand-900"
+              : "border-gray-300"
+          }`} rounded-[8px] flex flex-col gap-4 min-w-[240px]`}
           key={product.id}
         >
           <div className="w-full h-[250px] relative">
@@ -75,8 +81,8 @@ function ChooseProduct() {
                     product.sizes.find(
                       (size) =>
                         size.value ===
-                        settings.settings[
-                          product.id as keyof typeof settings.settings
+                        settings.build[
+                          product.id as keyof typeof settings.build
                         ].ribbonSize
                     ) || null
                   }
@@ -89,6 +95,10 @@ function ChooseProduct() {
             size="full"
             className="p-[12px]"
             onClick={() => handleCreate(product.id)}
+            disabled={
+              !settings.build[product.id as keyof typeof settings.build]
+                .ribbonSize
+            }
           >
             <span>Create</span>
           </Button>

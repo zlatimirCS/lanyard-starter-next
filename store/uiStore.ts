@@ -11,7 +11,7 @@ interface ProductSettings {
 
 interface Settings {
   pickedProduct: string;
-  settings: {
+  build: {
     lanyard: ProductSettings;
     dangle: ProductSettings;
     wristband: ProductSettings;
@@ -22,8 +22,8 @@ interface UIStore {
   currentStep: number;
   setCurrentStep: (step: number) => void;
   settings: Settings;
-  setRibbonSize: (productId: keyof Settings["settings"], size: string) => void;
-  setPickActiveProduct: (productId: keyof Settings["settings"]) => void;
+  setRibbonSize: (productId: keyof Settings["build"], size: string) => void;
+  setPickActiveProduct: (productId: keyof Settings["build"]) => void;
   loadSettingsFromCookies: () => void;
 }
 
@@ -45,7 +45,7 @@ function getDefaultSettingsFromCookies(): Settings | null {
 
 const defaultSettings = {
   pickedProduct: "",
-  settings: {
+  build: {
     lanyard: {
       id: "lanyard",
       ribbonSize: "",
@@ -71,23 +71,23 @@ export const useUIStore = create<UIStore>((set) => ({
 
   // actions
   setCurrentStep: (step: number) => set({ currentStep: step }),
-  setRibbonSize: (productId: keyof Settings["settings"], size: string) =>
+  setRibbonSize: (productId: keyof Settings["build"], size: string) =>
     set(
       produce((state: UIStore) => {
-        state.settings.settings[productId].ribbonSize = size;
+        state.settings.build[productId].ribbonSize = size;
       })
     ),
-  setPickActiveProduct: (productId: keyof Settings["settings"]) =>
+  setPickActiveProduct: (productId: keyof Settings["build"]) =>
     set(
       produce((state: UIStore) => {
         state.settings.pickedProduct = productId;
-        state.settings.settings[productId].active = true;
+        state.settings.build[productId].active = true;
         // Deactivate other products
         (
-          Object.keys(state.settings.settings) as (keyof Settings["settings"])[]
+          Object.keys(state.settings.build) as (keyof Settings["build"])[]
         ).forEach((key) => {
           if (key !== productId) {
-            state.settings.settings[key].active = false;
+            state.settings.build[key].active = false;
           }
         });
       })
