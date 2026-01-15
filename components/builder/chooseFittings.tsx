@@ -1,5 +1,5 @@
 function ChooseFittings() {
-  return <div>choose product</div>;
+  return <div>Choose Fittings</div>;
 }
 
 export default ChooseFittings;

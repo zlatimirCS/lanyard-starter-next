@@ -14,8 +14,8 @@ const Stepper = () => {
   const currentStep = useUIStore((state) => state.currentStep);
   const setCurrentStep = useUIStore((state) => state.setCurrentStep);
 
-  const isFirstStep = currentStep === 0;
-  const isLastStep = currentStep === steps.length - 1;
+  // const isFirstStep = currentStep === 0;
+  // const isLastStep = currentStep === steps.length - 1;
 
   return (
     <div className="bg-background-secondary">
