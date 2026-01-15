@@ -3,14 +3,20 @@
 import { products } from "@/utils/data/products";
 import Image from "next/image";
 import { useState } from "react";
-import CustomSelect from "../customSelect";
 import Button from "../Button";
+import Select from "react-select";
 
 function ChooseProduct() {
   const [selectedSizes, setSelectedSizes] = useState<{
     [key: string]: string | null;
   }>({});
   console.log("selectedSizes", selectedSizes);
+
+  const handleChange = (
+    selectedOption: { value: string; label: string } | null
+  ) => {
+    console.log("Selected option:", selectedOption);
+  };
 
   return (
     <div className="max-w-[954px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[27px]">
@@ -40,21 +46,18 @@ function ChooseProduct() {
                 {product.description}
               </p>
             </div>
-            <div className="flex flex-col gap-2">
-              <p className="text-gray-500 text-[14px] font-normal leading-[140%]">
-                Choose ribbon size:
-              </p>
-              <CustomSelect
-                options={product.sizes || []}
-                value={selectedSizes[product.id] || null}
-                onChange={(value) =>
-                  setSelectedSizes((prev) => ({
-                    ...prev,
-                    [product.id]: value,
-                  }))
-                }
-              />
-            </div>
+            {product?.sizes && (
+              <div className="flex flex-col gap-2">
+                <p className="text-gray-500 text-[14px] font-normal leading-[140%]">
+                  Choose ribbon size:
+                </p>
+                <Select
+                  options={product?.sizes || []}
+                  instanceId="choose-product-select"
+                  onChange={handleChange}
+                />
+              </div>
+            )}
           </div>
           <Button
             variant="primary"

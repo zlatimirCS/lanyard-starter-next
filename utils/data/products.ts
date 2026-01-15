@@ -3,7 +3,11 @@ export const products = [
     id: "lanyard",
     name: "Lanyard",
     description: "Custom designed lanyard printed on 15mm or 20mm rPET ribbon.",
-    sizes: ["15mm", "20mm", "25mm"],
+    sizes: [
+      { value: "15mm", label: "15mm" },
+      { value: "20mm", label: "20mm" },
+      { value: "25mm", label: "25mm" },
+    ],
     imageUrl: "/assets/images/lanyards.webp",
     active: true,
   },
@@ -12,7 +16,11 @@ export const products = [
     name: "K’Dangle",
     description:
       "Custom designed k’dangle printed on 15mm or 20mm rPET ribbon.",
-    sizes: ["15mm", "20mm", "25mm"],
+    sizes: [
+      { value: "15mm", label: "15mm" },
+      { value: "20mm", label: "20mm" },
+      { value: "25mm", label: "25mm" },
+    ],
     imageUrl: "/assets/images/dangle.webp",
     active: true,
   },
