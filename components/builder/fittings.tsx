@@ -5,9 +5,22 @@ import { useUIStore } from "@/store/uiStore";
 
 function Fittings() {
   const settings = useUIStore((state) => state.settings);
+  const setFitting = useUIStore((state) => state.setFitting);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log(`Checkbox is now: ${event.target.value}`);
+    const selectedFittingId = event.target.value;
+    const productId = settings.pickedProduct;
+
+    // Toggle: if clicking the same fitting, uncheck it
+    const currentFitting =
+      settings.build[productId as keyof typeof settings.build].fitting;
+    const newFitting =
+      currentFitting === selectedFittingId ? "" : selectedFittingId;
+
+    console.log(`Selected fitting ${newFitting} for product ${productId}`);
+    setFitting(productId as keyof typeof settings.build, newFitting);
   };
+  console.log("Settings in Fittings component:", settings);
   return (
     <div className="w-[302px] p-[16px] rounded-[8px] border border-gray-300 flex flex-col gap-4">
       <p className="text-gray-900 text-[16px] font-normal leading-[140%]">
@@ -24,7 +37,11 @@ function Fittings() {
             <CustomCheckbox
               onChange={handleChange}
               value={fitting.id}
-              checked={true}
+              checked={
+                settings.build[
+                  settings.pickedProduct as keyof typeof settings.build
+                ].fitting === fitting.id
+              }
             />
             <div className="flex-1 flex flex-col gap-[2px] mt-[-3px]">
               <p className="text-gray-900 text-[16px] font-normal leading-[140%]">

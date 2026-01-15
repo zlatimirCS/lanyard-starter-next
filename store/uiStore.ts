@@ -5,6 +5,7 @@ interface ProductSettings {
   ribbonSize: string;
   active: boolean;
   id: string;
+  fitting: string;
   // length: string;
   // attachment: string;
 }
@@ -24,6 +25,7 @@ interface UIStore {
   settings: Settings;
   setRibbonSize: (productId: keyof Settings["build"], size: string) => void;
   setPickActiveProduct: (productId: keyof Settings["build"]) => void;
+  setFitting: (productId: keyof Settings["build"], fitting: string) => void;
   loadSettingsFromCookies: () => void;
 }
 
@@ -49,16 +51,19 @@ const defaultSettings = {
     lanyard: {
       id: "lanyard",
       ribbonSize: "",
+      fitting: "",
       active: false,
     },
     dangle: {
       id: "dangle",
       ribbonSize: "",
+      fitting: "",
       active: false,
     },
     wristband: {
       id: "wristband",
       ribbonSize: "",
+      fitting: "",
       active: false,
     },
   },
@@ -90,6 +95,12 @@ export const useUIStore = create<UIStore>((set) => ({
             state.settings.build[key].active = false;
           }
         });
+      })
+    ),
+  setFitting: (productId: keyof Settings["build"], fitting: string) =>
+    set(
+      produce((state: UIStore) => {
+        state.settings.build[productId].fitting = fitting;
       })
     ),
   loadSettingsFromCookies: () => {

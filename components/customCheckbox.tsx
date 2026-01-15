@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function CustomCheckbox({
   onChange,
@@ -12,6 +12,11 @@ function CustomCheckbox({
   checked?: boolean;
 }) {
   const [isChecked, setIsChecked] = useState(checked || false);
+
+  // Sync internal state with external checked prop
+  useEffect(() => {
+    setIsChecked(checked || false);
+  }, [checked]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsChecked(event.target.checked);
