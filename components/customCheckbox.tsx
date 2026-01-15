@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 function CustomCheckbox({
   onChange,
   value,
@@ -11,15 +9,7 @@ function CustomCheckbox({
   value: string;
   checked?: boolean;
 }) {
-  const [isChecked, setIsChecked] = useState(checked || false);
-
-  // Sync internal state with external checked prop
-  useEffect(() => {
-    setIsChecked(checked || false);
-  }, [checked]);
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsChecked(event.target.checked);
     onChange?.(event);
   };
 
@@ -30,16 +20,16 @@ function CustomCheckbox({
         className="sr-only"
         onChange={handleChange}
         value={value}
-        checked={isChecked}
+        checked={checked || false}
       />
       <span
         className={`w-4 h-4 border border-black rounded-[4px] inline-flex items-center justify-center transition-all ${
-          isChecked ? "bg-brand-800" : "bg-white"
+          checked ? "bg-brand-800" : "bg-white"
         }`}
       >
         <svg
           className={`w-[20px] h-[20px] text-white ${
-            isChecked ? "block" : "hidden"
+            checked ? "block" : "hidden"
           }`}
           fill="currentColor"
           viewBox="0 0 20 20"
