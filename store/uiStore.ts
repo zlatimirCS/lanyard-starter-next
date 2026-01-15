@@ -18,17 +18,34 @@ interface UIStore {
   setCurrentStep: (step: number) => void;
   settings: Settings;
   setRibbonSize: (productId: keyof Settings, size: string) => void;
+  loadSettingsFromCookies: () => void;
+}
+
+// read default settings from cookies function
+function getDefaultSettingsFromCookies(): Settings | null {
+  const match = document.cookie.match(
+    new RegExp("(^| )productSettings=([^;]+)")
+  );
+  if (match) {
+    try {
+      console.log("Cookie found:", match[2]);
+      return JSON.parse(decodeURIComponent(match[2]));
+    } catch {
+      return null;
+    }
+  }
+  return null;
 }
 
 const defaultSettings = {
   lanyard: {
-    ribbonSize: "20mm",
+    ribbonSize: "",
   },
   dangle: {
-    ribbonSize: "20mm",
+    ribbonSize: "",
   },
   wristband: {
-    ribbonSize: "15mm",
+    ribbonSize: "",
   },
 };
 
@@ -45,4 +62,12 @@ export const useUIStore = create<UIStore>((set) => ({
         state.settings[productId].ribbonSize = size;
       })
     ),
+  loadSettingsFromCookies: () => {
+    if (typeof document !== "undefined") {
+      const cookieSettings = getDefaultSettingsFromCookies();
+      if (cookieSettings) {
+        set({ settings: cookieSettings });
+      }
+    }
+  },
 }));
