@@ -10,17 +10,20 @@ interface ProductSettings {
 }
 
 interface Settings {
-  lanyard: ProductSettings;
-  dangle: ProductSettings;
-  wristband: ProductSettings;
+  pickedProduct: string;
+  settings: {
+    lanyard: ProductSettings;
+    dangle: ProductSettings;
+    wristband: ProductSettings;
+  };
 }
 
 interface UIStore {
   currentStep: number;
   setCurrentStep: (step: number) => void;
   settings: Settings;
-  setRibbonSize: (productId: keyof Settings, size: string) => void;
-  setPickActiveProduct: (productId: keyof Settings) => void;
+  setRibbonSize: (productId: keyof Settings["settings"], size: string) => void;
+  setPickActiveProduct: (productId: keyof Settings["settings"]) => void;
   loadSettingsFromCookies: () => void;
 }
 
@@ -41,20 +44,23 @@ function getDefaultSettingsFromCookies(): Settings | null {
 }
 
 const defaultSettings = {
-  lanyard: {
-    id: "lanyard",
-    ribbonSize: "",
-    active: false,
-  },
-  dangle: {
-    id: "dangle",
-    ribbonSize: "",
-    active: false,
-  },
-  wristband: {
-    id: "wristband",
-    ribbonSize: "",
-    active: false,
+  pickedProduct: "",
+  settings: {
+    lanyard: {
+      id: "lanyard",
+      ribbonSize: "",
+      active: false,
+    },
+    dangle: {
+      id: "dangle",
+      ribbonSize: "",
+      active: false,
+    },
+    wristband: {
+      id: "wristband",
+      ribbonSize: "",
+      active: false,
+    },
   },
 };
 
@@ -65,20 +71,23 @@ export const useUIStore = create<UIStore>((set) => ({
 
   // actions
   setCurrentStep: (step: number) => set({ currentStep: step }),
-  setRibbonSize: (productId: keyof Settings, size: string) =>
+  setRibbonSize: (productId: keyof Settings["settings"], size: string) =>
     set(
       produce((state: UIStore) => {
-        state.settings[productId].ribbonSize = size;
+        state.settings.settings[productId].ribbonSize = size;
       })
     ),
-  setPickActiveProduct: (productId: keyof Settings) =>
+  setPickActiveProduct: (productId: keyof Settings["settings"]) =>
     set(
       produce((state: UIStore) => {
-        state.settings[productId].active = true;
+        state.settings.pickedProduct = productId;
+        state.settings.settings[productId].active = true;
         // Deactivate other products
-        (Object.keys(state.settings) as (keyof Settings)[]).forEach((key) => {
+        (
+          Object.keys(state.settings.settings) as (keyof Settings["settings"])[]
+        ).forEach((key) => {
           if (key !== productId) {
-            state.settings[key].active = false;
+            state.settings.settings[key].active = false;
           }
         });
       })

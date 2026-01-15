@@ -22,13 +22,16 @@ function ChooseProduct() {
     console.log("Selected option:", selectedOption);
     console.log("Product ID:", productId);
     if (selectedOption && productId) {
-      setRibbonSize(productId as keyof typeof settings, selectedOption.value);
+      setRibbonSize(
+        productId as keyof typeof settings.settings,
+        selectedOption.value
+      );
     }
   };
   const handleCreate = (productId: string) => {
     // Proceed to the next step
     console.log("Create button clicked for product:", productId);
-    setPickActiveProduct(productId as keyof typeof settings);
+    setPickActiveProduct(productId as keyof typeof settings.settings);
   };
 
   return (
@@ -72,7 +75,9 @@ function ChooseProduct() {
                     product.sizes.find(
                       (size) =>
                         size.value ===
-                        settings[product.id as keyof typeof settings].ribbonSize
+                        settings.settings[
+                          product.id as keyof typeof settings.settings
+                        ].ribbonSize
                     ) || null
                   }
                 />
