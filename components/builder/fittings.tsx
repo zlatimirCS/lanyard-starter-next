@@ -7,7 +7,7 @@ function Fittings() {
     console.log(`Checkbox is now: ${event.target.value}`);
   };
   return (
-    <div className="bg-yellow-300 w-[270px] p-[16px] rounded-[8px] border border-gray-300 flex flex-col gap-2">
+    <div className="bg-yellow-300 w-[270px] p-[16px] rounded-[8px] border border-gray-300 flex flex-col gap-4">
       <p className="text-gray-900 text-[16px] font-normal leading-[140%]">
         Lanyard fittings
       </p>
@@ -17,7 +17,11 @@ function Fittings() {
       <div className="flex flex-col gap-4">
         {fittingsOptions.lanyard.map((fitting) => (
           <div key={fitting.id} className="flex items-start gap-2">
-            <CustomCheckbox onChange={handleChange} value={fitting.id} />
+            <CustomCheckbox
+              onChange={handleChange}
+              value={fitting.id}
+              checked={true}
+            />
             <div className="flex-1 flex flex-col gap-[2px] mt-[-3px]">
               <p className="text-gray-900 text-[16px] font-normal leading-[140%]">
                 {fitting.name}
