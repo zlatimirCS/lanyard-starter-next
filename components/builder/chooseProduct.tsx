@@ -8,6 +8,9 @@ import { useUIStore } from "@/store/uiStore";
 
 function ChooseProduct() {
   const setRibbonSize = useUIStore((state) => state.setRibbonSize);
+  const setPickActiveProduct = useUIStore(
+    (state) => state.setPickActiveProduct
+  );
   const settings = useUIStore((state) => state.settings);
 
   console.log("Current settings:", settings);
@@ -21,6 +24,11 @@ function ChooseProduct() {
     if (selectedOption && productId) {
       setRibbonSize(productId as keyof typeof settings, selectedOption.value);
     }
+  };
+  const handleCreate = (productId: string) => {
+    // Proceed to the next step
+    console.log("Create button clicked for product:", productId);
+    setPickActiveProduct(productId as keyof typeof settings);
   };
 
   return (
@@ -75,7 +83,7 @@ function ChooseProduct() {
             variant="primary"
             size="full"
             className="p-[12px]"
-            onClick={() => {}}
+            onClick={() => handleCreate(product.id)}
           >
             <span>Create</span>
           </Button>

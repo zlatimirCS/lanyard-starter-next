@@ -3,6 +3,8 @@ import { produce } from "immer";
 
 interface ProductSettings {
   ribbonSize: string;
+  active: boolean;
+  id: string;
   // length: string;
   // attachment: string;
 }
@@ -18,6 +20,7 @@ interface UIStore {
   setCurrentStep: (step: number) => void;
   settings: Settings;
   setRibbonSize: (productId: keyof Settings, size: string) => void;
+  setPickActiveProduct: (productId: keyof Settings) => void;
   loadSettingsFromCookies: () => void;
 }
 
@@ -39,13 +42,19 @@ function getDefaultSettingsFromCookies(): Settings | null {
 
 const defaultSettings = {
   lanyard: {
+    id: "lanyard",
     ribbonSize: "",
+    active: false,
   },
   dangle: {
+    id: "dangle",
     ribbonSize: "",
+    active: false,
   },
   wristband: {
+    id: "wristband",
     ribbonSize: "",
+    active: false,
   },
 };
 
@@ -60,6 +69,18 @@ export const useUIStore = create<UIStore>((set) => ({
     set(
       produce((state: UIStore) => {
         state.settings[productId].ribbonSize = size;
+      })
+    ),
+  setPickActiveProduct: (productId: keyof Settings) =>
+    set(
+      produce((state: UIStore) => {
+        state.settings[productId].active = true;
+        // Deactivate other products
+        (Object.keys(state.settings) as (keyof Settings)[]).forEach((key) => {
+          if (key !== productId) {
+            state.settings[key].active = false;
+          }
+        });
       })
     ),
   loadSettingsFromCookies: () => {
