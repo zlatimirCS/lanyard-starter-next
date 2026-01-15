@@ -12,6 +12,7 @@
   --color-gray-500: #757575;
   --color-neutral-gray-30: #c6c6c6;
   --color-blue-70: #0043ce;
+  --color-gray-400: #b3b3b3;
 }
 
 @theme inline {
@@ -27,6 +28,7 @@
   --color-gray-500: var(--color-gray-500);
   --color-neutral-gray-30: var(--color-neutral-gray-30);
   --color-blue-70: var(--color-blue-70);
+  --color-gray-400: var(--color-gray-400);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -40,6 +42,6 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-inter), sans-serif; /* Inter for body */
-  overflow-y: auto; /* optional, but useful */
+  overflow-y: scroll;
   scrollbar-gutter: stable;
 }
