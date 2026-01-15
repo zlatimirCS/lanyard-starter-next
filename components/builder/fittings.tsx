@@ -1,8 +1,10 @@
 import { fittingsOptions } from "@/utils/data/fittingsOptions";
 import CustomCheckbox from "../customCheckbox";
 import Image from "next/image";
+import { useUIStore } from "@/store/uiStore";
 
 function Fittings() {
+  const settings = useUIStore((state) => state.settings);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log(`Checkbox is now: ${event.target.value}`);
   };
@@ -15,7 +17,9 @@ function Fittings() {
         Choose clip:
       </p>
       <div className="flex flex-col gap-4">
-        {fittingsOptions.lanyard.map((fitting) => (
+        {fittingsOptions[
+          settings?.pickedProduct as keyof typeof fittingsOptions
+        ].map((fitting) => (
           <div key={fitting.id} className="flex items-start gap-2">
             <CustomCheckbox
               onChange={handleChange}

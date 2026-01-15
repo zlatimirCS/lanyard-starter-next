@@ -26,7 +26,7 @@ function HomePageComponent() {
   // Load settings from cookies on mount
   useEffect(() => {
     loadSettingsFromCookies();
-  }, []);
+  }, [loadSettingsFromCookies]);
 
   // Save settings to cookies whenever they change
   useEffect(() => {
